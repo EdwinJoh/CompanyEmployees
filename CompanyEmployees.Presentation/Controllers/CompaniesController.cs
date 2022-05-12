@@ -23,7 +23,8 @@ namespace CompanyEmployees.Presentation.Controllers
                     .GetAllCompanies(trackChanges: false);
                 return Ok(companies);
             }
-            catch (Exception ex) {
+            catch 
+            {
 
                 return StatusCode(500, "Internal service error");
             }
