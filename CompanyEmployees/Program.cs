@@ -1,6 +1,7 @@
 using CompanyEmployees.Extensions;
 using NLog;
 using Microsoft.AspNetCore.HttpOverrides;
+using Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +24,15 @@ builder.Services.AddControllers()
 
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-    app.UseDeveloperExceptionPage();
-else
+
+var logger = app.Services.GetRequiredService<ILoggerManager>();
+app.ConfigureExceptionHandler(logger);
+
+if (app.Environment.IsProduction()) {
     app.UseHsts();
+}
+
 
 app.UseHttpsRedirection();
 
