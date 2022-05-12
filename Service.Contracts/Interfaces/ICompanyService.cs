@@ -10,5 +10,6 @@ namespace Service.Contracts.Interfaces
     public interface ICompanyService
     {
         IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges);
+        CompanyDto GetCompany(Guid CompanyId, bool trackChanges);
     }
 }

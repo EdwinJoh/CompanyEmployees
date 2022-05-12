@@ -26,6 +26,14 @@ namespace Service.Projects.ServiceContracts
             return companiesDto;
 
         }
+        public CompanyDto GetCompany(Guid id,bool trackChanges)
+        {
+            var company = _repository.Company.GetCompany(id,trackChanges);
+            //check if the company is null
+
+            var companyDto = _mapper.Map<CompanyDto>(company);
+            return companyDto;
+        }
     }
 
 }
