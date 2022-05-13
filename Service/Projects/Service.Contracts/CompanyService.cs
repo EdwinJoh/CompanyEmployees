@@ -27,9 +27,9 @@ namespace Service.Projects.ServiceContracts
             return companiesDto;
 
         }
-        public CompanyDto GetCompany(Guid id,bool trackChanges)
+        public CompanyDto GetCompany(Guid id, bool trackChanges)
         {
-            var company = _repository.Company.GetCompany(id,trackChanges);
+            var company = _repository.Company.GetCompany(id, trackChanges);
             if (company is null)
                 throw new CompanyNotFoundException(id);
 
@@ -44,9 +44,34 @@ namespace Service.Projects.ServiceContracts
             var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
             return companyToReturn;
         }
+        public IEnumerable<CompanyDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        {
+            if (ids is null)
+                throw new IdParametersBadRequestException();
+            var companyEntities = _repository.Company.GetByIds(ids, trackChanges);
+            if (ids.Count() != companyEntities.Count())
+                throw new CollectionByIdsBadRequestException();
+            var companiesToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+            return companiesToReturn;
+        }
+        public (IEnumerable<CompanyDto> Companies, string ids) CreatCompanyCollection(
+            IEnumerable<CompanyForCreationDto> companyCollection)
+        {
+            if (companyCollection is null)
+                throw new CompanyCollectionBadRequest();
+            var companyEntities = _mapper.Map<IEnumerable<Company>>(companyCollection);
 
-        
+            foreach (var company in companyEntities) 
+            {
+                _repository.Company.CreateCompany(company);
+            }
+            _repository.Save();
+            var companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+            var ids = string.Join(",", companyCollectionToReturn.Select(c=> c.Id));
+            return (companies: companyCollectionToReturn,ids: ids);
+        }
+
+     
     }
-
 }
 

@@ -39,6 +39,14 @@ namespace Repository.Configuration
                 Age = 35,
                 Position = "Administrator",
                 CompanyId = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3")
+            },
+            new Employee
+            {
+                Id = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479111"),
+                Name = "Edde booy",
+                Age= 24,
+                Position ="Tester",
+                CompanyId = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3")
             }
             );
         }
