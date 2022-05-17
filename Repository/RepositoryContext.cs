@@ -10,11 +10,11 @@ namespace Repository
          : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new ComapnyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfiguration(new ComapnyConfiguration());
+        //    modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+        //}
 
         public DbSet<Company>? Companies { get; set; }
         public DbSet<Employee>? Employees { get; set; }
